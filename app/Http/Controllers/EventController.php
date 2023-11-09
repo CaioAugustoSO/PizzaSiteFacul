@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Event;
+use App\Models\EventsUser;
 use App\Models\User;
 
 class EventController extends Controller
@@ -60,9 +61,13 @@ class EventController extends Controller
         $user = auth()->user();
         $event->user_id = $user->id;
 
+        if(!$user){
+            return redirect()->route('events.create')->with('error', 'Logue antes de criar o anuncio do livro.');
+        }
+
         $event->save();
 
-        return redirect('/')->with('msg', 'Evento criado com sucesso!');
+        return redirect()->route('events.create')->with('success', 'Livro cadastrado com sucesso.');
 
     }
 
@@ -73,20 +78,21 @@ class EventController extends Controller
         $user = auth()->user();
         $hasUserJoined = false;
 
-        if($user) {
+        if ($user) {
+            $userEvents = $user->eventsAsParticipant;
 
-            $userEvents = $user->eventsAsParticipant->toArray();
+            if ($userEvents) {
+                $userEventsArray = $userEvents->toArray();
 
-            foreach($userEvents as $userEvent) {
-                if($userEvent['id'] == $id) {
-                    $hasUserJoined = true;
+                foreach ($userEventsArray as $userEvent) {
+                    if ($userEvent['id'] == $id) {
+                        $hasUserJoined = true;
+                    }
                 }
             }
-
         }
 
         $eventOwner = User::where('id', $event->user_id)->first()->toArray();
-
         return view('events.show', ['event' => $event, 'eventOwner' => $eventOwner, 'hasUserJoined' => $hasUserJoined]);
 
     }
@@ -99,8 +105,9 @@ class EventController extends Controller
 
         $eventsAsParticipant = $user->eventsAsParticipant;
 
+
         return view('events.dashboard',
-            ['events' => $events, 'eventsasparticipant' => $eventsAsParticipant]
+            ['events' => $events, 'eventsasparticipant' => $eventsAsParticipant, 'user' => $user]
         );
 
     }
@@ -110,6 +117,21 @@ class EventController extends Controller
         Event::findOrFail($id)->delete();
 
         return redirect('/dashboard')->with('msg', 'Evento excluído com sucesso!');
+
+    }
+
+    public function closecart($id) {
+
+        $user = User::findOrFail($id);
+
+
+        $events = $user->eventsAsParticipant;
+
+        foreach ($events as $key => $event) {
+            dd(EventsUser::where('event_id', $event->id)->first());
+        }
+
+        return redirect('/dashboard')->with('msg', 'Compra finalizada !');
 
     }
 

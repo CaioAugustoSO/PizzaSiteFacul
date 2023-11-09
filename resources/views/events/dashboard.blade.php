@@ -5,16 +5,16 @@
 @section('content')
 
 <div class="col-md-10 offset-md-1 dashboard-title-container">
-    <h1>Meus Eventos</h1>
+    <h1>Meus Livros</h1>
 </div>
 <div class="col-md-10 offset-md-1 dashboard-events-container">
-    @if(isset($events) && is_array($events) && count($events))
+    @if(isset($events) && count($events))
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
-                <th scope="col">Participantes</th>
+                <th scope="col">Quantia</th>
                 <th scope="col">Ações</th>
             </tr>
         </thead>
@@ -37,20 +37,20 @@
         </tbody>
     </table>
     @else
-    <p>Você ainda não tem eventos, <a href="/events/create">criar evento</a></p>
+    <p>Você ainda não tem livros, <a href="/events/create">criar anuncio</a></p>
     @endif
 </div>
 <div class="col-md-10 offset-md-1 dashboard-title-container">
-    <h1>Eventos que estou participando</h1>
+    <h1>Seus Livros Anunciados</h1>
 </div>
 <div class="col-md-10 offset-md-1 dashboard-events-container">
-    @if(isset($eventsasparticipant) && is_array($eventsasparticipant) && count($eventsasparticipant))
+    @if(isset($eventsasparticipant) && count($eventsasparticipant))
 <table class="table">
     <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Nome</th>
-            <th scope="col">Participantes</th>
+            <th scope="col">Quantia</th>
             <th scope="col">Ações</th>
         </tr>
     </thead>
@@ -66,7 +66,7 @@
                         @method("DELETE")
                         <button type="submit" class="btn btn-danger delete-btn">
                             <ion-icon name="trash-outline"></ion-icon>
-                            Sair do Evento
+                            Remover do Carrinho
                         </button>
                     </form>
                 </td>
@@ -74,8 +74,17 @@
         @endforeach
     </tbody>
 </table>
+<div class="row-12 d-flex justify-content-center">
+    <form action="/events/closecart/{{ $user->id }}" method="POST">
+        @csrf
+        @method("POST")
+<button type="submit" class="btn btn-primary delete-btn">
+    Finalizar Compra
+</button>
+</form>
+</div>
 @else
-<p>Você ainda não está participando de nenhum evento, <a href="/">veja todos os eventos</a></p>
+<p>Seu Carrinho está vazio</p>
 @endif
 </div>
 @endsection

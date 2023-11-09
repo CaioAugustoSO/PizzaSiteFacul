@@ -21,24 +21,24 @@
         <nav class="navbar navbar-expand-lg navbar-light">
           <div class="collapse navbar-collapse" id="navbar">
             <a href="/" class="navbar-brand">
-              <img src="/img/hdcevents_logo.svg" alt="HDC Events">
+              <img src="/img/logo.jpg" alt="Páginas e Reliquias">
             </a>
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a href="/" class="nav-link">Eventos</a>
+                <a href="/" class="nav-link">Livros</a>
               </li>
               <li class="nav-item">
-                <a href="/events/create" class="nav-link">Criar Eventos</a>
+                <a href="/events/create" class="nav-link">Criar Anúncio</a>
               </li>
               @auth
               <li class="nav-item">
-                <a href="/dashboard" class="nav-link">Meus eventos</a>
+                <a href="/dashboard" class="nav-link">Carrinho</a>
               </li>
               <li class="nav-item">
                 <form action="/logout" method="POST">
                   @csrf
-                  <a href="/logout" 
-                    class="nav-link" 
+                  <a href="/logout"
+                    class="nav-link"
                     onclick="event.preventDefault();
                     this.closest('form').submit();">
                     Sair
@@ -69,7 +69,7 @@
         </div>
       </main>
       <footer>
-        <p>HDC Events &copy; 2020</p>
+        <p>Páginas e Reliquias &copy; 2023</p>
       </footer>
       <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
     </body>
