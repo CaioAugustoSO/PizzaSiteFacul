@@ -57,6 +57,10 @@ class EventController extends Controller
             $event->image = $imageName;
 
         }
+        else
+        {
+            return redirect()->route('events.create')->with('error', 'Imagem é obrigatória');
+        }
 
         $user = auth()->user();
         $event->user_id = $user->id;
@@ -128,7 +132,12 @@ class EventController extends Controller
         $events = $user->eventsAsParticipant;
 
         foreach ($events as $key => $event) {
-            dd(EventsUser::where('event_id', $event->id)->first());
+          $usereventdeleteid =  EventsUser::where('event_id', $event->id)->first()->id;
+          $todelete = EventsUser::findOrFail($usereventdeleteid)->delete();
+
+          $eventdelete = Event::findOrFail($event->id)->delete();
+
+
         }
 
         return redirect('/dashboard')->with('msg', 'Compra finalizada !');

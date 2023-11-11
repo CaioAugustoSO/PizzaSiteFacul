@@ -70,7 +70,7 @@
         <input type="checkbox" name="items[]" value="Outros"> Outros
       </div>
     </div>
-    <input type="submit" class="btn btn-primary" value="Criar Evento">
+    <input type="submit" class="btn btn-primary" value="Criar Anuncio">
   </form>
 </div>
 

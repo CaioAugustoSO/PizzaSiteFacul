@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class EventsUser extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
 
     protected $table = 'event_user';

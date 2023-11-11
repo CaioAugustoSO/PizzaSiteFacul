@@ -21,7 +21,7 @@
               id="event-submit"
               onclick="event.preventDefault();
               this.closest('form').submit();">
-              Confirmar Presença
+              Adicionar ao carrinho
             </a>
           </form>
         @else
